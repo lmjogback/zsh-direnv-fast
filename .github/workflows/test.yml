@@ -1,0 +1,19 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Zsh and direnv
+        run: sudo apt-get update && sudo apt-get install -y zsh direnv
+      - name: Check syntax
+        run: |
+          zsh -n zsh-direnv-fast.plugin.zsh
+          zsh -n tests/direnv-fast.zsh
+      - name: Run tests
+        run: ./tests/run.sh
